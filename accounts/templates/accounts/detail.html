@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %} Profile Detail {% endblock %}
+
+{% block body %}
+
+
+<table>
+  <tr>
+    <td>first name</td>
+    <td>{{ profile.first_name }}</td>
+  </tr>
+  <tr>
+    <td>last name</td>
+    <td>{{ profile.last_name }}</td>
+  </tr>
+  <tr>
+    <td>email</td>
+    <td>{{ profile.email }}</td>
+  </tr>
+  <tr>
+    <td>Birthday</td>
+    <td>{{ profile.date_of_birth }}</td>
+  </tr>
+  <tr>
+    <td>BIO</td>
+    <td>{{ profile.bio }}</td>
+  </tr>
+  <tr>
+    <td>Avatar</td>
+    <td><img src="{{ profile.avatar.url }}" alt=""></td>
+  </tr>
+</table>
+
+
+{% endblock %}

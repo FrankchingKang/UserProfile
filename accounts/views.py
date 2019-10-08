@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
+from .models import Profile
 
 def sign_in(request):
     form = AuthenticationForm()
@@ -54,3 +54,8 @@ def sign_out(request):
     logout(request)
     messages.success(request, "You've been signed out. Come back soon!")
     return HttpResponseRedirect(reverse('home'))
+
+
+def profile_detail(request):
+    profile = Profile.objects.get()
+    return render(request, 'accounts/detail.html', {'profile':profile})
