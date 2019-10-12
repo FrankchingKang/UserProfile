@@ -1,6 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordResetForm, UserChangeForm, PasswordChangeForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -71,3 +71,15 @@ def profile_edit(request):
             messages.add_message(request,messages.SUCCESS,'save change!')
             return HttpResponseRedirect(reverse('accounts:profile_detail'))
     return render(request, "accounts/edit.html",{'form':form})
+
+# refer https://anitanad.wordpress.com/2019/03/11/django-tips-9-how-to-create-a-change-password-view/
+def change_password(request):
+    form = PasswordChangeForm(request.user, request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return HttpResponseRedirect(reverse('accounts:profile_detail'))
+
+    return render(request, "accounts/change_password.html",{'form':form})
