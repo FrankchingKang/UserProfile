@@ -7,4 +7,4 @@ class Profile(models.Model):
     email = models.EmailField(default='example@example.com')
     date_of_birth = models.DateField(default='none')
     bio = models.TextField(default='bio')
-    avatar = models.ImageField(upload_to='assets/images/')
+    avatar = models.ImageField(upload_to='assets/images/', blank='True')

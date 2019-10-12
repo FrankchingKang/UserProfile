@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Profile
+from .forms import ProfileForm
 
 def sign_in(request):
     form = AuthenticationForm()
@@ -59,3 +60,14 @@ def sign_out(request):
 def profile_detail(request):
     profile = Profile.objects.get()
     return render(request, 'accounts/detail.html', {'profile':profile})
+
+def profile_edit(request):
+    original_profile = Profile.objects.get()
+    form = ProfileForm(instance = original_profile)
+    if request.method =='POST':
+        form = ProfileForm(instance = original_profile,data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,messages.SUCCESS,'save change!')
+            return HttpResponseRedirect(reverse('accounts:profile_detail'))
+    return render(request, "accounts/edit.html",{'form':form})
