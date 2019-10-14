@@ -28,3 +28,8 @@ class ProfileForm(forms.ModelForm):
         raise forms.ValidationError("""
             email is not valida
             """)
+    def clean_bio(self):
+        bio = self.cleaned_data.get('bio')
+        if len(bio) < 10:
+            raise forms.ValidationError("bio needs at least 10 characters")
+        return bio
