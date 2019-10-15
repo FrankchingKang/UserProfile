@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'sign_out/$', views.sign_out, name='sign_out'),
     url(r'detail/$', views.profile_detail, name='profile_detail'),
     url(r'profile/edit/$', views.profile_edit, name='profile_edit'),
-    url(r'change_password/$', views.change_password, name='change_password'),
+    url(r'profile/change_password/$', views.change_password, name='change_password'),
 ]
