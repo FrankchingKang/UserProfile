@@ -65,7 +65,8 @@ def profile_edit(request):
     original_profile = Profile.objects.get()
     form = ProfileForm(instance = original_profile)
     if request.method =='POST':
-        form = ProfileForm(instance = original_profile,data=request.POST)
+        form = ProfileForm(instance = original_profile,data = request.POST,
+            files = request.FILES)
         if form.is_valid():
             form.save()
             messages.add_message(request,messages.SUCCESS,'save change!')
