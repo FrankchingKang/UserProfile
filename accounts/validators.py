@@ -21,7 +21,7 @@ class DigitValidator:
 
 class SpecialCharValidator:
     def validate(self, password, user=None):
-        Special_char = "[~\!@#\$%\^&\*\(\)_\+{}\":;'\[\]]"
+        Special_char = "~!@#$%^&*()_+"
         if not any(char in Special_char for char in password):
             raise ValidationError(_('must include one or more of special characters, such as @, #, $'))
 
