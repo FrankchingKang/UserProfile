@@ -9,6 +9,7 @@ class ProfileForm(forms.ModelForm):
             'first_name',
             'last_name',
             'email',
+            'second_email',
             'date_of_birth',
             'bio',
             'avatar',
@@ -27,6 +28,13 @@ class ProfileForm(forms.ModelForm):
             return email
         raise forms.ValidationError("""
             email is not valida
+            """)
+    def clean_second_email(self):
+        second_email = str(self.cleaned_data.get('second_email'))
+        if re.match(r'[-\w\d+.]+@[-\w\d.]+', second_email) != None:
+            return second_email
+        raise forms.ValidationError("""
+            second email is not valida
             """)
     def clean_bio(self):
         bio = self.cleaned_data.get('bio')

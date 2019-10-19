@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<form class="row" action="" method="post">
+<form class="row" action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit" name="submit" value="submit" class='button'>
