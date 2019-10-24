@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Profile
 from .forms import ProfileForm
+import re
 
 def sign_in(request):
     form = AuthenticationForm()
@@ -37,6 +38,14 @@ def sign_up(request):
     if request.method == 'POST':
         form = UserCreationForm(data=request.POST)
         if form.is_valid():
+            username=form.cleaned_data['username']
+            password=form.cleaned_data['password1']
+            if re.search(username, password):
+                messages.success(
+                    request,
+                    "fail"
+                )
+                return render(request, 'accounts/sign_up.html', {'form': form})
             form.save()
             user = authenticate(
                 username=form.cleaned_data['username'],

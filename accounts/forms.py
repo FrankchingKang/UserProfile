@@ -31,10 +31,11 @@ class ProfileForm(forms.ModelForm):
             """)
     def clean_second_email(self):
         second_email = str(self.cleaned_data.get('second_email'))
-        if re.match(r'[-\w\d+.]+@[-\w\d.]+', second_email) != None:
+        email = str(self.cleaned_data.get('email'))
+        if second_email == email :
             return second_email
         raise forms.ValidationError("""
-            second email is not valida
+            second email have to be same as email
             """)
     def clean_bio(self):
         bio = self.cleaned_data.get('bio')
