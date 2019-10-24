@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordResetForm, UserChangeForm, PasswordChangeForm
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Profile
@@ -65,11 +66,12 @@ def sign_out(request):
     messages.success(request, "You've been signed out. Come back soon!")
     return HttpResponseRedirect(reverse('home'))
 
-
+@login_required
 def profile_detail(request):
     profile = Profile.objects.get()
     return render(request, 'accounts/detail.html', {'profile':profile})
 
+@login_required
 def profile_edit(request):
     original_profile = Profile.objects.get()
     form = ProfileForm(instance = original_profile)
@@ -83,6 +85,7 @@ def profile_edit(request):
     return render(request, "accounts/edit.html",{'form':form})
 
 # refer https://anitanad.wordpress.com/2019/03/11/django-tips-9-how-to-create-a-change-password-view/
+@login_required
 def change_password(request):
     form = PasswordChangeForm(request.user, request.POST)
     if request.method == 'POST':
