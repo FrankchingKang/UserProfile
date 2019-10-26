@@ -68,12 +68,12 @@ def sign_out(request):
 
 @login_required
 def profile_detail(request):
-    profile = Profile.objects.get()
+    profile = request.user.profile
     return render(request, 'accounts/detail.html', {'profile':profile})
 
 @login_required
 def profile_edit(request):
-    original_profile = Profile.objects.get()
+    original_profile = request.user.profile
     form = ProfileForm(instance = original_profile)
     if request.method =='POST':
         form = ProfileForm(instance = original_profile,data = request.POST,

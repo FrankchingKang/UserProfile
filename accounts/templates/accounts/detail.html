@@ -32,7 +32,11 @@
   </tr>
   <tr>
     <td>Avatar</td>
-    <td><img src="{{ profile.avatar.url }}" alt="photo"></td>
+    {% if profile.avatar %}
+      <td><img src="{{ profile.avatar.url }}" alt="photo"></td>
+    {% else %}
+      <td>no photo</td>
+    {% endif %}
   </tr>
 </table>
 
