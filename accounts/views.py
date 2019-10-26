@@ -44,7 +44,7 @@ def sign_up(request):
             if re.search(username, password):
                 messages.success(
                     request,
-                    "fail"
+                    "fail password can not include your name"
                 )
                 return render(request, 'accounts/sign_up.html', {'form': form})
             form.save()
@@ -87,9 +87,19 @@ def profile_edit(request):
 # refer https://anitanad.wordpress.com/2019/03/11/django-tips-9-how-to-create-a-change-password-view/
 @login_required
 def change_password(request):
+    profile = request.user.profile
     form = PasswordChangeForm(request.user, request.POST)
     if request.method == 'POST':
         if form.is_valid():
+            password=form.cleaned_data['new_password1']
+            if re.search(profile.first_name, password):
+                messages.success(
+                    request,
+                    "fail, password can not include your first name"
+                )
+                return render(request, 'accounts/sign_up.html', {'form': form})
+
+
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
